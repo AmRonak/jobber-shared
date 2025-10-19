@@ -18,14 +18,14 @@
     "trailingComma": "es5"
   },
   "keywords": [],
-  "name": "@AmRonak/jobber-shared",
+  "name": "@amronak/jobber-shared",
   "author": "Ronak Panchal",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AmRonak/jobber-shared.git"
+    "url": "git+https://github.com/amronak/jobber-shared.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/"
   },
   "exports": {
     ".": {
