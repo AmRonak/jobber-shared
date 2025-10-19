@@ -12,20 +12,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com/
+          scope: "@amronak"
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
       - name: Build project
         run: npm run build
-      - name: Configure npm auth for GitHub Packages
-        run: |
-          echo "@amronak:registry=https://npm.pkg.github.com/" > ~/.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
 
-      - name: Publish package
+      - name: Publish to GitHub Packages
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
