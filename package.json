@@ -1,15 +1,15 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
-  "main": "index.js",
+  "main": "./build/cjs/index.js",
   "description": "Helpers library for Jobber app",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build": "babel src --presets=./scripts/babel-preset.js --extensions .ts,.tsx --out-dir build/src --source-maps",
-    "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel src --presets=./scripts/babel-preset.js --extensions .ts,.tsx --ignore src/**/*.specs.tsx --out-dir build/cjs --source-maps",
-    "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel src --presets=./scripts/babel-preset.js --extensions .ts,.tsx --ignore src/**/*.specs.tsx --out-dir build/esm --source-maps"
+    "build": "npm run build:cjs && npm run build:esm && tsc --outDir build/src",
+    "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel src --presets=./scripts/babel-preset.js --extensions .ts,.tsx --out-dir build/cjs --source-maps",
+    "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel src --presets=./scripts/babel-preset.js --extensions .ts,.tsx --out-dir build/esm --source-maps"
   },
   "prettier": {
     "printWidth": 80,
@@ -29,15 +29,15 @@
   },
   "exports": {
     ".": {
-      "import": "./src/index.js",
-      "require": "./src/index.js"
+      "import": "./build/src/index.js",
+      "require": "./build/src/index.js"
     },
     "./icons": {
-      "import": "./src/icons/index.js",
-      "require": "./src/icons/index.js"
+      "import": "./build/src/icons/index.js",
+      "require": "./build/src/icons/index.js"
     }
   },
-  "types": "./src/index.d.ts",
+  "types": "./build/src/index.d.ts",
   "dependencies": {
     "@elastic/elasticsearch": "^9.1.1",
     "cloudinary": "^2.7.0",
