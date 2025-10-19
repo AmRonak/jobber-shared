@@ -1,27 +1,30 @@
-
 name: Publish
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
-      - run: npm install
-      - run: npm run build
-      - run: |
-          echo @AmRonak:https://npm.pkg.github.com/ > build/.npmrc
-          echo //npm.pkg.github.com/:_authToken=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 >> build/.npmrc
-      - run: npm publish
-        working-directory: ./build
+          node-version: 22
+          registry-url: https://npm.pkg.github.com/
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
+      - name: Configure npm auth for GitHub Packages
+        run: |
+          echo "@amronak:registry=https://npm.pkg.github.com/" > ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - name: Publish package
+        run: npm publish
         env:
-          NPM_TOKEN: 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
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
